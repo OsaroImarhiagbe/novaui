@@ -1,5 +1,5 @@
 import { Nav} from "@/utils/types/types";
-import {VisaArrowLeftLow, VisaArrowRightLow,VisaSearchHigh} from "@visa/nova-icons-react";
+import {VisaArrowLeftLow, VisaArrowRightLow,} from "@visa/nova-icons-react";
 import { Typography } from '@visa/nova-react';
 import { sidebar } from "@/utils/data/data";
 const NaviBar:React.FC<Nav> = ({isOpen,handleClick}) => {
