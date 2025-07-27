@@ -1,7 +1,7 @@
-import React,{useMemo} from 'react';
+import React from 'react';
 import { Messageitem } from '@/utils/types/types';
 import { Avatar } from '@visa/nova-react';
-import user from '../../public/assets/user.png'
+// import user from '../../public/assets/user.png'
       // Function to determine bubble width based on message length
 const getBubbleWidth =(messageLength: number) => {
         if (messageLength < 50) return '30%';

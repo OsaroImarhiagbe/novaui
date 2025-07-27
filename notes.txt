@@ -1,0 +1,25 @@
+colorScheme='tertiary'
+
+      {/* Quick Actions Section */}
+                                {/* <UtilityFragment vPaddingLeft={20} vPaddingRight={20} vGap={8}>
+                                    <Typography variant="subtitle-2" className="text-gray-400 mb-2">
+                                        Quick Actions
+                                    </Typography>
+                                    <UtilityFragment vGap={6}>
+                                        <Button
+                                            colorScheme="tertiary"
+                                            className="w-full justify-start text-gray-300 hover:text-white hover:bg-gray-700"
+                                            element={<span>Form Components</span>}
+                                        />
+                                        <Button
+                                            colorScheme="tertiary"
+                                            className="w-full justify-start text-gray-300 hover:text-white hover:bg-gray-700"
+                                            element={<span>Navigation Components</span>}
+                                        />
+                                        <Button
+                                            colorScheme="tertiary"
+                                            className="w-full justify-start text-gray-300 hover:text-white hover:bg-gray-700"
+                                            element={<span>Layout Components</span>}
+                                        />
+                                    </UtilityFragment>
+                                </UtilityFragment> */}

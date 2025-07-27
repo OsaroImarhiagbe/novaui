@@ -1,0 +1,13 @@
+/* styles.module.scss */
+.appContainer {
+       &:global(:has(.v-nav .v-tabs)) {
+         // The open navigation should be 242px
+        grid-template-columns: 242px 1fr;
+       }
+    }
+    
+.layoutContainer {
+min-block-size: 700px;
+display: grid;
+grid-template-columns: auto 1fr;
+}

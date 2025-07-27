@@ -21,6 +21,11 @@ export interface Messageitem{
     code?:string
 }
 
+export type GenerateCode = {
+    components:string[],
+    formName:string,
+    indentSize?:number
+}
 
 export type code_templateProps = {
     type?:string,

@@ -1,20 +1,48 @@
-import {VisaSearchLow, GenericSearchTiny} from "@visa/nova-icons-react";
-import { code_templateMap } from "../types/types";
+import {GenericSearchTiny,GenericChatTiny} from "@visa/nova-icons-react";
+import { code_templateMap,GenerateCode } from "../types/types";
 export const sidebar = [
     {
         name:'New Chat',
-        icon: VisaSearchLow
+        icon: GenericChatTiny
     },
     {
         name:'Search chats',
         icon: GenericSearchTiny
     },
     {
-        name:'Library',
-        icon: VisaSearchLow
+        name:'Chats',
     },
 
 ]
+export const chats = [
+    {
+        name:'Chat 1',
+    },
+    {
+        name:'Chat 2',
+    },
+    {
+        name:'Chat 3',
+    },
+
+]
+export const suggestComponents = (prompt:string) => {
+    const lowerCase = prompt.toLowerCase()
+    const usedComponents = new Set<string>()
+
+    for(const [keyword,components] of Object.entries(componentMap)){
+        if(lowerCase.includes(keyword)){
+            components.forEach((comp) => usedComponents.add(comp))
+        }
+    }
+    console.log('suggested: ',usedComponents)
+    return Array.from(usedComponents)
+}
+
+export const NovaUI = (input:string) =>{
+    // return ai message logic
+}
+
 
 // componentMapper.ts
 export const componentMap = {
@@ -118,7 +146,7 @@ const code_template:code_templateMap = {
 //     return 'Form'; // Default fallback
 //   };
 
-const createIndent = (level, size = 2) => ' '.repeat(level * size);
+const createIndent = (level:number, size:number = 2) => ' '.repeat(level * size);
 
 const interpolateTemplate = (template, props) => {
   return template.replace(/\{(\w+)\}/g, (match, key) => {
@@ -129,7 +157,7 @@ const interpolateTemplate = (template, props) => {
     return match;
   });
 };
-export const generateCode = (config) => {
+export const generateCode = (config:GenerateCode) => {
     const {
       components,
       formName,
@@ -138,19 +166,8 @@ export const generateCode = (config) => {
   
     const validComponents = components.filter(comp => code_template[comp]);
     
-    // if (validComponents.length === 0) {
-    //   return 'No valid components selected';
-    // }
-  
     const imports = validComponents.join(', ');
     
-    // const formPropsStr = Object.entries(formProps)
-    //   .map(([key, value]) => {
-    //     if (typeof value === 'string') return `${key}="${value}"`;
-    //     return `${key}={${JSON.stringify(value)}}`;
-    //   })
-    //   .join(' ');
-  
     let code = '';
     
     code += `import React from 'react';\n`;
@@ -158,7 +175,7 @@ export const generateCode = (config) => {
     
     code += `export default function ${formName}() {\n`;
     
-    const hasInput = validComponents.some(comp => ['Input', 'Select'].includes(comp));
+    const hasInput = validComponents.some(comp => ['Input', 'Select','Checkbox','Button'].includes(comp));
     if (hasInput) {
       code += `${createIndent(1, indentSize)}const [formData, setFormData] = React.useState({});\n\n`;
       code += `${createIndent(1, indentSize)}const handleChange = (e) => {\n`;
