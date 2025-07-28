@@ -34,12 +34,21 @@ export type code_templateProps = {
     checked?:boolean,
     variant?:string,
     children?:string
-    required?:boolean
+    required?:boolean,
+    buttonSize?:string,
+    colorScheme?:string,
+    id?:string,
+    tag?:string,
+    src?:string,
+    alt?:string,
+    badgeType?:string,
+    chipType?:string,
+    htmlFor?:string,
 }
 export type code_template = {
     name:string,
     template:string,
-    props:code_templateProps
+    props?:code_templateProps
 
 }
 export type code_templateMap = {

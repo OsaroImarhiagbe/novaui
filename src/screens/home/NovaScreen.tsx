@@ -1,27 +1,23 @@
 'use client'
-import { useState, useCallback,useEffect } from "react"
+import { useState,useEffect } from "react"
 import MessageItem from "@/components/MessageItem";
 import { ConversationType } from "@/utils/types/types";
 import { suggestComponents, generateCode } from "@/utils/data/data";
 import {
-    VisaAccountTiny,
     VisaChevronDownTiny,
     VisaChevronUpTiny,
     VisaMediaFastForwardTiny,
-    VisaMediaRewindTiny,
-    GenericChatTiny,
     VisaSettingsTiny,
+    VisaMediaRewindTiny,
+    GenericChatTiny
 } from '@visa/nova-icons-react';
 import {
     Button,
-    Divider,
-    Link,
     Nav,
+    Typography,
     Tab,
     TabSuffix,
     Tabs,
-    Typography,
-    Utility,
     UtilityFragment,
 } from '@visa/nova-react';
 import Styles from './styles.module.scss';
@@ -34,13 +30,6 @@ const NovaScreen = () => {
     const [settingsExpanded, setSettingsExpanded] = useState<boolean>(false);
     const [navExpanded, setNavExpanded] = useState<boolean>(true);
     const [chatHistory,setChatHistory] = useState<Record<string,ConversationType[]>>({})
-    // Mock chat history data
-    // const chatHistory = [
-    //     { id: 1, title: "Login Form Design", date: "Today" },
-    //     { id: 2, title: "Dashboard Components", date: "Yesterday" },
-    //     { id: 3, title: "Button Variations", date: "2 days ago" },
-    //     { id: 4, title: "Form Validation", date: "3 days ago" },
-    // ];
 
     const id = 'nova-sidebar-navigation';
     const navRegionAriaLabel = 'Nova UI Sidebar Navigation';
@@ -48,14 +37,15 @@ const NovaScreen = () => {
 
 
     useEffect(() => {
-        localStorage.clear()
+        // localStorage.clear()
         const history = localStorage.getItem('allMessages')
         if(history){
             const parse = JSON.parse(history)
+            console.log('Parsed Data: ',parse)
             setChatHistory(parse)
         }
         console.log('History:',history)
-    },[])
+    },[conversation])
     useEffect(() => {
         if (!value) return;
         try{
@@ -113,15 +103,15 @@ const NovaScreen = () => {
     }
 console.log('Chat Histry:',chatHistory)
     return (
-        <div className={Styles.appContainer}>
+         <div className="bg-red-500">
             <div id="layout" className={Styles.layoutContainer}>
-                <Nav id={id} orientation='vertical' tag="aside" className="hidden md:block h-screen z-10 bg-[#2C2D3A]">
+          <Nav id={id} orientation='vertical' tag="aside" className="h-screen z-10" >
                     
-                        <div
+          {navExpanded && ( <div
                         style={{
-                            padding:20,
+                            padding:10,
                         }}
-                        className="bg-[#2C2D3A] hidden md:block min-h-full">
+                        className="bg-[#2C2D3A] h-screen">
                         <nav aria-label={navRegionAriaLabel} className="h-full flex flex-col">
                             <div className="flex flex-row justify-between items-center">
                                   {/* Header Section */}
@@ -135,30 +125,16 @@ console.log('Chat Histry:',chatHistory)
                                         NovaUI
                                     </Typography>
                                 </UtilityFragment>
-
-                                {/* Toggle Sidebar Button */}
-                                <UtilityFragment vPadding={16}>
-                                    <Button
-                                        aria-label="Collapse sidebar"
-                                        aria-expanded={!!navExpanded}
-                                        buttonSize="small"
-                                        colorScheme="tertiary"
-                                        iconButton
-                                        onClick={() => setNavExpanded(!navExpanded)}
-                                        className="text-gray-400 hover:text-white"
-                                    >
-                                    <VisaMediaRewindTiny />
-                                    </Button>
-                                </UtilityFragment>
                             </div>
                                 {/* New Chat Section */}
                                 <UtilityFragment vPadding={40} vGap={20}>
                                 <Button
                                 onClick={startNewChat}
-                                className="w-full justify-start hover:bg-grey-500"
+                                className="w-1/2 hover:bg-grey-500"
                                 colorScheme='tertiary'
                                 iconButton={false}
                                 >
+                                <GenericChatTiny className="mr-3"/>
                                 <span className="text-white">New Chat</span>
                                 </Button>
                                 </UtilityFragment>
@@ -170,10 +146,10 @@ console.log('Chat Histry:',chatHistory)
                                     aria-controls={`${id}-chat-history-menu`}
                                     colorScheme='tertiary'
                                     onClick={() => setChatHistoryExpanded(!chatHistoryExpanded)}
-                                    className="w-full justify-between text-gray-300 hover:text-white"
+                                    className="w-full justify-between text-white"
                                     >
                                         <div className="flex items-center">
-                                            <GenericChatTiny className="mr-3" color='#fff'/>
+                                        <GenericChatTiny className="mr-3"/>
                                             <span>Chat History</span>
                                         </div>
                                         <TabSuffix element={chatHistoryExpanded ? <VisaChevronUpTiny color="#fff" /> : <VisaChevronDownTiny color="#fff"/>} />
@@ -185,7 +161,7 @@ console.log('Chat Histry:',chatHistory)
                                             Object.entries(chatHistory).map((item,i) => {
                                                 return (
                                                     <Tab key={i}>
-                                                    <Button colorScheme="tertiary">{item[0]}</Button>
+                                                    <Button colorScheme='secondary' className="text-white" >{item[0]}</Button>
                                                 </Tab>
                                                 );
                                             })
@@ -209,40 +185,19 @@ console.log('Chat Histry:',chatHistory)
                                         </div>
                                         <TabSuffix element={settingsExpanded ? <VisaChevronUpTiny /> : <VisaChevronDownTiny />} />
                                     </Button>
-
-                                    {/* <UtilityFragment vHide={!settingsExpanded}>
-                                        <div id={`${id}-settings-menu`} aria-hidden={!settingsExpanded} className="ml-6">
-                                            <UtilityFragment vGap={4}>
-                                                <Button
-                                                    colorScheme="tertiary"
-                                                    className="w-full justify-start text-sm text-gray-400 hover:text-white"
-                                                    element={<span>Theme</span>}
-                                                />
-                                                <Button
-                                                    colorScheme="tertiary"
-                                                    className="w-full justify-start text-sm text-gray-400 hover:text-white"
-                                                    element={<span>Export Chat</span>}
-                                                />
-                                                <Button
-                                                    colorScheme="tertiary"
-                                                    className="w-full justify-start text-sm text-gray-400 hover:text-white"
-                                                    element={<span>Clear History</span>}
-                                                />
-                                            </UtilityFragment>
-                                        </div>
-                                    </UtilityFragment> */}
                                 </UtilityFragment>
                             </nav>
-                        </div>
-                    
-                    {/* Collapsed Sidebar */}
-                    {!navExpanded && (
-                        <div
+                        </div>)}   
+                </Nav>
+
+                {/* Main Content Area */}
+                <section className="bg-[#343541] text-white min-h-screen w-full relative flex-1">
+                     { navExpanded ? <div
                         style={{
                             paddingTop:10,
                             padding:10,
                         }}
-                        className="bg-[#2C2D3A] min-h-full w-full">
+                        >
                             <UtilityFragment vGap={16}>
                                 <Button
                                     aria-label="Expand sidebar"
@@ -252,17 +207,10 @@ console.log('Chat Histry:',chatHistory)
                                     onClick={() => setNavExpanded(!navExpanded)}
                                     className="text-gray-400 hover:text-white"
                                 >
-                                    <VisaMediaFastForwardTiny />
+                                   <VisaMediaRewindTiny/>
                                 </Button>
                             </UtilityFragment> 
-                            <GenericChatTiny color="#fff"/>
-                        </div>
-                    )}
-                </Nav>
-
-                {/* Main Content Area */}
-                <section className="bg-[#343541] text-white min-h-screen w-full relative flex-1">
-                        <div
+                        </div> :  <div
                         style={{
                             paddingTop:10,
                             padding:10,
@@ -280,7 +228,7 @@ console.log('Chat Histry:',chatHistory)
                                     <VisaMediaFastForwardTiny />
                                 </Button>
                             </UtilityFragment> 
-                        </div>
+                        </div>}
                     <div className="w-full min-h-screen flex flex-col items-center justify-center px-4 md:px-6 py-20 gap-12">
                         {/* Header */}
                         {conversation.length === 0 && (
@@ -299,7 +247,7 @@ console.log('Chat Histry:',chatHistory)
 
                         {/* Chat Messages */}
                         {conversation.length > 0 && (
-                            <div className="w-full max-w-4xl mx-auto flex flex-col gap-4 overflow-y-auto px-2 py-4 h-[60vh]">
+                            <div className="w-full max-w-4xl mx-auto flex flex-col gap-25 overflow-y-auto no-scrollbar x-10 py-10 h-[60vh]">
                                 {conversation.map((item, i) => (
                                     <MessageItem
                                         key={i}
@@ -315,9 +263,9 @@ console.log('Chat Histry:',chatHistory)
                         )}
 
                         {/* Input Section */}
-                        <div className="bg-white w-full max-w-4xl rounded-2xl flex items-center px-4 py-3 mx-auto md:static md:mt-0 fixed bottom-20 left-0 md:left-auto md:bottom-auto shadow-lg">
+                        <div className="bg-white w-full max-w-4xl rounded-2xl flex items-center gap-10 px-6 py-3">
                             <input
-                                className="placeholder-gray-400 text-black w-full p-4 focus:outline-none"
+                                className="placeholder-gray-400 text-black w-full p-6 focus:outline-none"
                                 type='text'
                                 value={value}
                                 onChange={(e) => setValue(e.target.value)}
@@ -326,7 +274,7 @@ console.log('Chat Histry:',chatHistory)
                             {value && (
                                 <Button
                                     onClick={handleSubmit}
-                                    className="rounded-lg ml-2"
+                                    className="rounded-lg"
                                     buttonSize="large"
                                     disabled={NovaAi}
                                 >
@@ -334,7 +282,6 @@ console.log('Chat Histry:',chatHistory)
                                 </Button>
                             )}
                         </div>
-
                         <Typography className="text-gray-400 text-center text-sm max-w-2xl">
                             NovaUI may display suggested components and code based on your prompt. 
                             Always review generated code before implementation.
