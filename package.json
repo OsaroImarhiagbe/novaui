@@ -10,8 +10,11 @@
   },
   "dependencies": {
     "@visa/nova-react": "^2.5.4",
+    "lucide-react": "^0.532.0",
+    "motion": "^12.23.11",
     "next": "15.4.4",
     "react": "19.1.0",
+    "react-confetti": "^6.4.0",
     "react-dom": "19.1.0",
     "sass": "^1.89.2"
   },

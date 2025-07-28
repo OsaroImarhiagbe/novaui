@@ -3,6 +3,23 @@ export type Nav = {
     handleClick: () => void
 }
 
+export type ButtonType =  {
+    text?:string,
+    click?: () => void,
+    isDisabled?:boolean,
+}
+export type CardType = {
+    headline:string,
+    description:string
+    img:string
+}
+export type CheckboxType =  {
+    text?:string,
+    checked?:boolean,
+    id:string,
+    isDisabled?:boolean,
+    onCheckedChange:(input:string,checked:boolean) => void
+}
 export type ConversationType = {
     role?:'user' | 'ai'
     message?:string,

@@ -27,7 +27,56 @@ export const suggestComponents = (prompt:string) => {
     return Array.from(usedComponents)
 }
 
-export const NovaUI = (input:string) =>{
+export const featuresData = [
+  {
+    name:'Generate UIs',
+    description:"Type something like ‘Login form with remember me’ and NovaUI builds it.",
+    img:'/images/code.jpg'
+  },
+  {
+    name:'Code Suggestions',
+    description:"You get real code snippets using Visa Product Design System.",
+     img:'/images/code1.jpg'
+  },
+  {
+    name:'Chat-Driven Workflow',
+    description:"Ask for changes or improvements and we’ll keep iterating.",
+     img:'/images/code2.jpg'
+  },
+]
+
+export const occupationData = [
+  {
+    id: '1',
+    name: 'Student',
+  },
+  {
+    id: '2',
+    name: 'Freelancer',
+  },
+  {
+    id: '3',
+    name: 'Engineer at a Company',
+  },
+  {
+    id: '4',
+    name: 'UI/UX or Product Designer',
+  },
+  {
+    id: '5',
+    name: 'Startup Founder / Entrepreneur',
+  },
+  {
+    id: '6',
+    name: 'Product Manager',
+  },
+  {
+    id: '8',
+    name: 'Career Switcher / Explorer',
+  },
+];
+
+export const NovaAI = (input:string) =>{
     // return ai message logic
 }
 

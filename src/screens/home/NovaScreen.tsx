@@ -122,7 +122,7 @@ console.log('Chat Histry:',chatHistory)
                                         fontSize:25
                                     }}
                                     className="text-white mb-4">
-                                        NovaUI
+                                        NovaAI
                                     </Typography>
                                 </UtilityFragment>
                             </div>
