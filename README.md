@@ -31,10 +31,16 @@
 - npm or yarn
 
 ---
+## 🚀 Features
+
+- **Upload Images**: Upload image files using a styled input and send them to an API.
+- **Search**: Live search through uploaded images by name.
+- **View All**: Display a list/grid of all uploaded images.
+- **Delete**: Delete any individual image from the list.
+- **SPA**: All interactions handled on a single page using React.
 
 ## 📦 Install Dependencies
 
-```bash
 npm install
 #or
 pnpm install
@@ -67,10 +73,6 @@ POST /auth-service/login → Request sent to trigger user authentication and aut
 POST /auth-service/signup → Request sent to allow user to be authenticated and have authorization with supabase auth.
 
 POST /auth-service/logout  → Request sent to allow user to be logged out of the web app using supabase auth, user session goes null once this is complete
-
-## ✨ Features
-🔍 Describe UI and NovaAI generates suggested components and code snippets
-💾 Persistence Conversation history is persisted via localStorage on every change.
 
 ## 🤖 How AI was utilize
 AI was utilized to help with styling the generated code logic, previous logic was not meeting the expectations that needed to be meet.
