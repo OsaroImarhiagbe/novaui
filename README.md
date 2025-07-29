@@ -7,6 +7,17 @@ NovaAI is an AI agent that generates UI components based off user input.
 > This project was completed as part of a coding assignment. It uses Next.js, Tailwind CSS 4, Visa Product Design System, and Local Storage (in-memory database).
 
 ---
+<div align="center">
+
+# NovaAI
+
+<em>Smarter Finances, Together</em>
+
+<!-- BADGES -->
+<img src="https://img.shields.io/github/last-commit/OsaroImarhiagbe/Monevo?style=flat&logo=git&logoColor=white&color=2E8B57" alt="last-commit">
+<img src="https://img.shields.io/github/languages/top/OsaroImarhiagbe/Monevo?style=flat&color=2E8B57" alt="repo-top-language">
+<img src="https://img.shields.io/github/languages/count/OsaroImarhiagbe/Monevo?style=flat&color=2E8B57" alt="repo-language-count">
+
 <em>Built with modern tools and technologies:</em>
 
 <img src="https://img.shields.io/badge/Next.js-000000.svg?style=flat&logo=next.js&logoColor=white" alt="Next.js">
@@ -17,6 +28,9 @@ NovaAI is an AI agent that generates UI components based off user input.
 <img src="https://img.shields.io/badge/Zustand-000000.svg?style=flat&logo=react&logoColor=white" alt="Zustand">
 <img src="https://img.shields.io/badge/Framer_Motion-EF0184.svg?style=flat&logo=framer&logoColor=white" alt="Framer Motion">
 <img src="https://img.shields.io/badge/ESLint-4B32C3.svg?style=flat&logo=ESLint&logoColor=white" alt="ESLint">
+
+</div>
+<br>
 
 ## 🚀 Getting Started
 
