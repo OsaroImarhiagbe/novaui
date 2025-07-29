@@ -21,12 +21,24 @@ export interface AuthCardType {
     confirmPassword?:string,
     handleSignUp?:() => void,
     handleLogin?:() => void,
-    loading?:boolean
+    loading?:boolean,
+    auth?:string,
+    username?:string,
+    emailValue?:string,
+    passwordValue?:string,
+    nameValue?:string,
+    confirmValue?:string,
+    emailChange?:(e:React.ChangeEvent<HTMLInputElement>) => void,
+    passwordChange?:(e:React.ChangeEvent<HTMLInputElement>) => void,
+    nameChange?:(e:React.ChangeEvent<HTMLInputElement>) => void,
+    confirmPasswordChange?:(e:React.ChangeEvent<HTMLInputElement>) => void
 }
 
 export interface InputType extends AuthCardType {
     label?:string,
-    place?:string
+    place?:string,
+    value?:string,
+    change?:(e:React.ChangeEvent<HTMLInputElement>) => void;
 }
 export type CheckboxType =  {
     text?:string,

@@ -4,30 +4,48 @@ import { motion } from "motion/react"
 import { useCallback,useState } from "react";
 import { useRouter } from "next/navigation";
 import AuthCard from '@/components/AuthCard'
+import axios from 'axios'
 const LoginScreen = () => {
     const router = useRouter()
     const [loading,setLoading] = useState<boolean>(false)
+    const [formData,setFormData] = useState({
+        email:'',
+        password:''
+    })
+
     const handleSignUp = useCallback(() => {
-      setLoading(true)
-      try{
-        setTimeout(() => {
-          setLoading(false)
-          router.push('/auth/signup')
-        },1000)
-      }catch(error){
-        console.error(`Error with navigation: ${error}`)
-      }
+        router.push('/auth/signup')
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
-    const handleLogin = useCallback(() => {
+
+    const handleEmailChange = useCallback((e:React.ChangeEvent<HTMLInputElement>) => { // Event handler for login
+        setFormData((prev) => ({...prev,email:e.target.value}))
+    },[])
+    const handlePasswordChange = useCallback((e:React.ChangeEvent<HTMLInputElement>) => { // Event handler for login
+        setFormData((prev) => ({...prev,password:e.target.value}))
+    },[])
+    const handleLogin = useCallback(async () => {
         setLoading(true)
         try{
-          setTimeout(() => {
-            setLoading(false)
-            router.push('/nova')
-          },1000)
+        const response = await axios.post('/api/auth-service/login',{
+            email:formData.email,
+            password:formData.password
+        })
+        if(!response || response.status === 500){
+            throw new Error('Error with login!')
+        }
+        if(response && response.status === 200){
+            setTimeout(() => {
+                setLoading(false)
+                router.push('/nova')
+              },1000)
+        }
+        setLoading(false)
         }catch(error){
           console.error(`Error with navigation: ${error}`)
+          setLoading(false)
+        }finally{
+            setLoading(false)
         }
       // eslint-disable-next-line react-hooks/exhaustive-deps
       },[])
@@ -64,7 +82,19 @@ const LoginScreen = () => {
                Where AI generate beautiful UIs from plain English in seconds. ⚡️
                </Typography>
            </motion.div>
-          <AuthCard email="Email" password="Password" handleSignUp={handleSignUp} handleLogin={handleLogin} loading={loading}/>
+          <AuthCard
+          email="Email"
+          emailValue={formData.email}
+          passwordValue={formData.password}
+          password="Password"
+          username='Name'
+          handleSignUp={handleSignUp}
+          handleLogin={handleLogin}
+          loading={loading}
+          emailChange={handleEmailChange}
+          passwordChange={handlePasswordChange}
+          auth='login'
+          />
    </div>
        </section>
     );

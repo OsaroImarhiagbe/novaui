@@ -13,7 +13,24 @@ import CheckboxComponent from './CheckBox';
 import Image from 'next/image';
 import { Loader2 } from 'lucide-react';
 
-const AuthCard:React.FC<AuthCardType>= ({email,password,handleSignUp,handleLogin,loading}) => {
+const AuthCard:React.FC<AuthCardType>= ({
+  email,
+  password,
+  handleSignUp,
+  handleLogin,
+  loading,
+  confirmPassword,
+  auth,
+  username,
+  emailValue,
+  passwordValue,
+  emailChange,
+  passwordChange,
+  confirmValue,
+  confirmPasswordChange,
+  nameValue,
+  nameChange
+}) => {
   return (
     <ContentCard
     style={{
@@ -30,17 +47,34 @@ const AuthCard:React.FC<AuthCardType>= ({email,password,handleSignUp,handleLogin
       element={<ContentCardBody />}
       vFlex vFlexCol vGap={20} vPadding={16}>
       
+      {
+        auth === 'signup' && <>
+          <ContentCardTitle
+        variant="headline-4"
+        className='text-black'>{username}</ContentCardTitle>
+         <InputComponent label={username} place='Name...' value={nameValue} change={nameChange}/>
+        </>
+      }
         <ContentCardTitle
         variant="headline-4"
         className='text-black'>{email}</ContentCardTitle>
-         <InputComponent label={email} place='Email...'/>
-         
+        <InputComponent label={email} place='Email...' value={emailValue} change={emailChange}/>
         <Typography className="v-pt-4">
           {password}
         </Typography>
-        <InputComponent label={password} place='Password...'/>
+        <InputComponent label={password} place='Password...' value={passwordValue} change={passwordChange}/>
+        {
+          auth === 'signup' &&  <Typography className="v-pt-4">
+          {confirmPassword}
+        </Typography>
+        }
+        {
+          auth === 'signup' && <InputComponent label={confirmPassword} place='Confirm Password...' value={confirmValue} change={confirmPasswordChange}/>
+        }
           {/* Remember Me */}
-          <Utility vFlex vFlexRow vAlignItems="center" vJustifyContent="between">
+          {
+            auth === 'login' && 
+            <Utility vFlex vFlexRow vAlignItems="center" vJustifyContent="between">
             <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
               <CheckboxComponent/>
               <Typography style={{ color: '#6b7280', fontSize: '14px' }}>
@@ -58,11 +92,12 @@ const AuthCard:React.FC<AuthCardType>= ({email,password,handleSignUp,handleLogin
               Forgot password?
             </Typography>
           </Utility>
+          }
           {loading ? <Loader2 className='animate-spin text-black'/> : 
           <>
-                 <Utility vFlex vFlexRow vAlignItems='center' vJustifyContent='center' vGap={10}>
-           <ButtonComponent text='Login' click={handleLogin}/>
-           <ButtonComponent text='SignUp' click={handleSignUp}/>
+            <Utility vFlex vFlexRow vAlignItems='center' vJustifyContent='center' vGap={10}>
+                 <ButtonComponent text='Login' click={handleLogin}/>
+                 <ButtonComponent text='SignUp' click={handleSignUp}/>
            </Utility>
 
              <Utility vFlex vFlexRow vAlignItems="center" vGap={16}>
