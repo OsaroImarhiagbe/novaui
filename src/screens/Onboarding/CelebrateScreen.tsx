@@ -24,7 +24,7 @@ export default function CelebrateScreen() {
             setCelebrate(false)
             setLoading(false)
             router.push('/nova')
-        }, 3000);
+        }, 5000);
     }catch(error){
         console.error(`Error navigating to home screen: ${error}`)
     }

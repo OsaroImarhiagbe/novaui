@@ -1,8 +1,9 @@
 'use client'
-import { useState,useEffect } from "react"
+import { useState,useEffect,useCallback } from "react"
 import MessageItem from "@/components/MessageItem";
 import { ConversationType } from "@/utils/types/types";
 import { suggestComponents, generateCode } from "@/utils/data/data";
+import { welcomeBackMessages,extractFormNameSimple, NovaAI} from "@/utils/data/data";
 import {
     VisaChevronDownTiny,
     VisaChevronUpTiny,
@@ -28,12 +29,17 @@ const NovaScreen = () => {
     const [NovaAi, setNovaAi] = useState<boolean>(false)
     const [chatHistoryExpanded, setChatHistoryExpanded] = useState<boolean>(false);
     const [settingsExpanded, setSettingsExpanded] = useState<boolean>(false);
-    const [navExpanded, setNavExpanded] = useState<boolean>(true);
+    const [welcomeBack,setWelcomeBack] = useState<string>('Welcome back')
+    const [navExpanded, setNavExpanded] = useState<boolean>(false);
     const [chatHistory,setChatHistory] = useState<Record<string,ConversationType[]>>({})
 
     const id = 'nova-sidebar-navigation';
     const navRegionAriaLabel = 'Nova UI Sidebar Navigation';
 
+
+    useEffect(() => {
+        setWelcomeBack(welcomeBackMessages[Math.floor(Math.random() * welcomeBackMessages.length)])
+    },[])
 
 
     useEffect(() => {
@@ -46,6 +52,7 @@ const NovaScreen = () => {
         }
         console.log('History:',history)
     },[conversation])
+
     useEffect(() => {
         if (!value) return;
         try{
@@ -61,49 +68,81 @@ const NovaScreen = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[conversation,value])
 
-    console.log('Object:',Object.keys(chatHistory))
+    // console.log('Object:',Object.keys(chatHistory))
     const handleSubmit = () => {
-        setNovaAi(true)
         if (value.trim() === '') return;
         try {
             setValue('')
-            const suggested = suggestComponents(value)
-            const code = generateCode({
-                components: suggested,
-                formName: 'RandomFunction',
-            })
+            let AIresponse='';
+            let suggested;
+            let code='';
+            let screenName='';
             setConversation(prev => [...prev, {
                 user_id: 'user_id_1',
                 role: 'user',
                 message: value,
                 date: new Date().toLocaleDateString()
             }])
-
-            setTimeout(() => {
-                setNovaAi(false)
-                setConversation((prev) => [
-                    ...prev,
-                    {
-                        ai_id: 'ai_id_1',
-                        role: 'ai',
-                        message: `NovaUI: Here's a basic component suggestion for: "${value} ${code}"`,
-                        date: new Date().toLocaleDateString()
-                    }
-                ])
-            }, 3000)
+            setNovaAi(true)
+            if(!value.includes('Responsive')){
+                AIresponse = NovaAI(value)
+                setTimeout(() => {
+                    setConversation((prev) => [
+                        ...prev,
+                        {
+                            ai_id: 'ai_id_1',
+                            role: 'ai',
+                            message:`${AIresponse}"`,
+                            date: new Date().toLocaleDateString()
+                        }
+                    ])
+                    setNovaAi(false)
+                }, 3000)
+            }else{
+                AIresponse = NovaAI(value)
+                suggested = suggestComponents(value)
+                screenName = extractFormNameSimple(value)
+                code = generateCode({
+                    components: suggested,
+                    formName: screenName,
+                })
+                setTimeout(() => {
+                    setConversation((prev) => [
+                        ...prev,
+                        {
+                            ai_id: 'ai_id_1',
+                            role: 'ai',
+                            message:`${AIresponse}: "${value} ${code}"`,
+                            date: new Date().toLocaleDateString()
+                        }
+                    ])
+                    setNovaAi(false)
+                }, 3000)
+            }
         } catch (error) {
             console.log(`Error submitting message : ${error}`)
         }
     }
 
    
-    const startNewChat = () => {
+    const startNewChat = useCallback(() => {
         setConversation([]);
         setValue('');
-    }
+    },[])
 console.log('Chat Histry:',chatHistory)
     return (
-         <div className="bg-red-500">
+         <div className="relative min-h-screen w-full overflow-hidden">
+        <div
+         className="absolute inset-x-0 top-10 -z-10 flex transform-gpu justify-center overflow-hidden blur-3xl"
+        >
+        <div
+            className="aspect-[1108/632] w-[69.25rem] flex-none bg-gradient-to-r from-[#80caff] to-[#4f46e5] opacity-20"
+            style={{
+              clipPath:
+                "polygon(73.6% 51.7%, 91.7% 11.8%, 100% 46.4%, 97.4% 82.2%, 92.5% 84.9%, 75.7% 64%, 55.3% 47.5%, 46.5% 49.4%, 45% 62.9%, 50.3% 87.2%, 21.3% 64.1%, 0.1% 100%, 5.4% 51.1%, 21.4% 63.9%, 58.9% 0.2%, 73.6% 51.7%)",
+            }}
+          />
+        </div>
             <div id="layout" className={Styles.layoutContainer}>
           <Nav id={id} orientation='vertical' tag="aside" className="h-screen z-10" >
                     
@@ -111,7 +150,7 @@ console.log('Chat Histry:',chatHistory)
                         style={{
                             padding:10,
                         }}
-                        className="bg-[#2C2D3A] h-screen">
+                        className="bg-gray-300 h-screen">
                         <nav aria-label={navRegionAriaLabel} className="h-full flex flex-col">
                             <div className="flex flex-row justify-between items-center">
                                   {/* Header Section */}
@@ -121,21 +160,21 @@ console.log('Chat Histry:',chatHistory)
                                     style={{
                                         fontSize:25
                                     }}
-                                    className="text-white mb-4">
+                                    className="text-black mb-4">
                                         NovaAI
                                     </Typography>
                                 </UtilityFragment>
                             </div>
                                 {/* New Chat Section */}
-                                <UtilityFragment vPadding={40} vGap={20}>
+                                <UtilityFragment>
                                 <Button
                                 onClick={startNewChat}
-                                className="w-1/2 hover:bg-grey-500"
+                                className="w-full hover:bg-grey-500"
                                 colorScheme='tertiary'
                                 iconButton={false}
                                 >
                                 <GenericChatTiny className="mr-3"/>
-                                <span className="text-white">New Chat</span>
+                                <span className="text-black">New Chat</span>
                                 </Button>
                                 </UtilityFragment>
 
@@ -150,7 +189,7 @@ console.log('Chat Histry:',chatHistory)
                                     >
                                         <div className="flex items-center">
                                         <GenericChatTiny className="mr-3"/>
-                                            <span>Chat History</span>
+                                            <span className="text-black">Chat History</span>
                                         </div>
                                         <TabSuffix element={chatHistoryExpanded ? <VisaChevronUpTiny color="#fff" /> : <VisaChevronDownTiny color="#fff"/>} />
                                          </Button>
@@ -161,7 +200,7 @@ console.log('Chat Histry:',chatHistory)
                                             Object.entries(chatHistory).map((item,i) => {
                                                 return (
                                                     <Tab key={i}>
-                                                    <Button colorScheme='secondary' className="text-white" >{item[0]}</Button>
+                                                    <Button colorScheme='secondary' className="text-black" >{item[0]}</Button>
                                                 </Tab>
                                                 );
                                             })
@@ -180,8 +219,8 @@ console.log('Chat Histry:',chatHistory)
                                         className="w-full justify-between text-gray-300 hover:text-white"
                                     >
                                         <div className="flex items-center">
-                                            <VisaSettingsTiny className="mr-3" />
-                                            <span>Settings</span>
+                                            <VisaSettingsTiny className="mr-3" color="#000" />
+                                            <span className="text-black">Settings</span>
                                         </div>
                                         <TabSuffix element={settingsExpanded ? <VisaChevronUpTiny /> : <VisaChevronDownTiny />} />
                                     </Button>
@@ -191,7 +230,7 @@ console.log('Chat Histry:',chatHistory)
                 </Nav>
 
                 {/* Main Content Area */}
-                <section className="bg-[#343541] text-white min-h-screen w-full relative flex-1">
+                <section className="text-white min-h-screen w-full relative flex-1">
                      { navExpanded ? <div
                         style={{
                             paddingTop:10,
@@ -233,13 +272,16 @@ console.log('Chat Histry:',chatHistory)
                         {/* Header */}
                         {conversation.length === 0 && (
                             <div className="text-center max-w-xl">
-                                <Typography variant='headline-1' style={{
+                                <Typography
+                                className="text-black"
+                                variant='headline-1'
+                                style={{
                                     fontSize: 35,
                                     marginBottom: 30
                                 }}>
-                                    Welcome back Emmanuel
+                                   {`${welcomeBack} Emmanuel`} ✨
                                 </Typography>
-                                <Typography className="text-lg text-gray-300" variant="subtitle-2">
+                                <Typography className="text-lg text-black" variant="subtitle-2">
                                     Describe the UI you want to build and NovaUI will suggest the components and code for you.
                                 </Typography>
                             </div>
@@ -282,7 +324,7 @@ console.log('Chat Histry:',chatHistory)
                                 </Button>
                             )}
                         </div>
-                        <Typography className="text-gray-400 text-center text-sm max-w-2xl">
+                        <Typography className="text-black text-center text-sm max-w-2xl">
                             NovaUI may display suggested components and code based on your prompt. 
                             Always review generated code before implementation.
                         </Typography>
