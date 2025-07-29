@@ -1,3 +1,5 @@
+
+
 export type Nav = {
     isOpen:boolean,
     handleClick: () => void
@@ -13,10 +15,23 @@ export type CardType = {
     description:string
     img:string
 }
+export interface AuthCardType {
+    email?:string,
+    password?:string,
+    confirmPassword?:string,
+    handleSignUp?:() => void,
+    handleLogin?:() => void,
+    loading?:boolean
+}
+
+export interface InputType extends AuthCardType {
+    label?:string,
+    place?:string
+}
 export type CheckboxType =  {
     text?:string,
     checked?:boolean,
-    id:string,
+    id?:string,
     isDisabled?:boolean,
     onCheckedChange:(input:string,checked:boolean) => void
 }

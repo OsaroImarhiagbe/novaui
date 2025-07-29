@@ -7,6 +7,16 @@ NovaAI is an AI agent that generates UI components based off user input.
 > This project was completed as part of a coding assignment. It uses Next.js, Tailwind CSS 4, Visa Product Design System, and Local Storage (in-memory database).
 
 ---
+<em>Built with modern tools and technologies:</em>
+
+<img src="https://img.shields.io/badge/Next.js-000000.svg?style=flat&logo=next.js&logoColor=white" alt="Next.js">
+<img src="https://img.shields.io/badge/TypeScript-3178C6.svg?style=flat&logo=TypeScript&logoColor=white" alt="TypeScript">
+<img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC.svg?style=flat&logo=tailwind-css&logoColor=white" alt="Tailwind CSS">
+<img src="https://img.shields.io/badge/Supabase-3ECF8E.svg?style=flat&logo=supabase&logoColor=white" alt="Supabase">
+<img src="https://img.shields.io/badge/Plaid-00B57F.svg?style=flat&logoColor=white" alt="Plaid">
+<img src="https://img.shields.io/badge/Zustand-000000.svg?style=flat&logo=react&logoColor=white" alt="Zustand">
+<img src="https://img.shields.io/badge/Framer_Motion-EF0184.svg?style=flat&logo=framer&logoColor=white" alt="Framer Motion">
+<img src="https://img.shields.io/badge/ESLint-4B32C3.svg?style=flat&logo=ESLint&logoColor=white" alt="ESLint">
 
 ## 🚀 Getting Started
 
@@ -45,6 +55,17 @@ src/
 ├── screens/        # Screen views (NovaAI,Onboarding)
 ├── utils/          # Hardcoded AI logic and types
 └── ...
+
+
+🧠 API
+GET /images → List all images
+
+GET /images?q=cat → Search by filename
+
+POST /upload → Upload a new image
+
+DELETE /images/:filename → Delete an image by filename
+
 
 ✨ Features
 🔍 Describe UI and NovaAI generates suggested components and code snippets

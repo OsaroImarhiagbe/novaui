@@ -1,17 +1,21 @@
 import { Input, InputContainer, Label, Utility } from '@visa/nova-react';
+import { InputType } from '@/utils/types/types';
+import { VisaEmailLow,VisaPasswordShowLow } from '@visa/nova-icons-react';
 
-// TIP: Customize this ID, pass it as a prop, or auto-generate it with useId() from @react
 const id = 'input-default';
 
-const DefaultInput = () => {
+const InputComponent:React.FC<InputType> = ({label,place}) => {
   return (
     <Utility vFlex vFlexCol vGap={4}>
-      {/* <Label htmlFor={id}>Label (required)</Label> */}
-      <InputContainer>
-        <Input aria-required="true" id={id} type="text"/>
-      </InputContainer>
-    </Utility>
+    <Label htmlFor={id}>{label} (required)</Label>
+    <InputContainer>
+      <Utility vFlex vFlexCol>
+      {label === 'Email' &&  <VisaEmailLow/>}
+        {label === 'Password' &&  <VisaPasswordShowLow/>}
+      </Utility>
+      <Input aria-required="true" id={id} type="text" placeholder={place}/>
+    </InputContainer>
+  </Utility>
   );
 };
-
-export default DefaultInput
+export default InputComponent
