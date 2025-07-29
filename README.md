@@ -1,17 +1,9 @@
- 📚 NovaAI (Take-Home Assignment)
 
-NovaAI is an AI agent that generates UI components based off user input.
-
-
-
-> This project was completed as part of a coding assignment. It uses Next.js, Tailwind CSS 4, Visa Product Design System, and Local Storage (in-memory database).
-
----
 <div align="center">
 
 # NovaAI
 
-<em>Smarter Finances, Together</em>
+<em>Build Clean User Friendly UI</em>
 
 <!-- BADGES -->
 <img src="https://img.shields.io/github/last-commit/OsaroImarhiagbe/Monevo?style=flat&logo=git&logoColor=white&color=2E8B57" alt="last-commit">
@@ -24,8 +16,7 @@ NovaAI is an AI agent that generates UI components based off user input.
 <img src="https://img.shields.io/badge/TypeScript-3178C6.svg?style=flat&logo=TypeScript&logoColor=white" alt="TypeScript">
 <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC.svg?style=flat&logo=tailwind-css&logoColor=white" alt="Tailwind CSS">
 <img src="https://img.shields.io/badge/Supabase-3ECF8E.svg?style=flat&logo=supabase&logoColor=white" alt="Supabase">
-<img src="https://img.shields.io/badge/Plaid-00B57F.svg?style=flat&logoColor=white" alt="Plaid">
-<img src="https://img.shields.io/badge/Zustand-000000.svg?style=flat&logo=react&logoColor=white" alt="Zustand">
+<img src="https://img.shields.io/badge/Visa_Design_System-1A1F71?style=flat&logo=visa&logoColor=white" alt="Visa Design System">
 <img src="https://img.shields.io/badge/Framer_Motion-EF0184.svg?style=flat&logo=framer&logoColor=white" alt="Framer Motion">
 <img src="https://img.shields.io/badge/ESLint-4B32C3.svg?style=flat&logo=ESLint&logoColor=white" alt="ESLint">
 
@@ -55,7 +46,10 @@ pnpm run dev
 # or
 yarn dev
 
-## 🧭 How to Use
+---
+
+### 🧭 How to Use
+
 
 1. Describe a UI 'Responsive login form with remember me'.
 2. NovaAI generate a code snippet with a component suggestion
@@ -72,13 +66,12 @@ src/
 
 
 🧠 API
-GET /images → List all images
+POST /auth-service/login → Request sent to trigger user authentication and authorization with supabase auth
 
-GET /images?q=cat → Search by filename
+POST /auth-service/signup → Request sent to allow user to be authenticated and have authorization with supabase auth.
 
-POST /upload → Upload a new image
+POST /auth-service/logout  → Request sent to allow user to be logged out of the web app using supabase auth, user session goes null once this is complete
 
-DELETE /images/:filename → Delete an image by filename
 
 
 ✨ Features
@@ -114,6 +107,7 @@ Write automated tests for image upload and search functionality.
 Next.js - React framework
 Supabase - Authentication Service
 TypeScript - Type safety
+Framer-Motion - small animation
 Tailwind CSS 4 - Utility-first styling
 Visa Product Design System - Components
 Vercel - Deployment
