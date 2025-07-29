@@ -39,19 +39,33 @@
 - **Delete**: Delete any individual image from the list.
 - **SPA**: All interactions handled on a single page using React.
 
-## 📦 Install Dependencies
+## 🛠 Tech Stack
 
+Next.js - React framework
+Supabase - Authentication Service
+TypeScript - Type safety
+Framer-Motion - small animation
+Tailwind CSS 4 - Utility-first styling
+Visa Product Design System - Components
+Vercel - Deployment
+
+## 📦 Install Dependencies
+```bash
 npm install
 #or
 pnpm install
 # or
 yarn install
+```
 
 # 📦  Run Development Server
+```bash
 pnpm run dev
 # or
+npm run dev
+# or
 yarn dev
-
+```
 ## 🧭 How to Use
 
 1. Describe a UI - for example, 'Responsive login form with remember me'.
@@ -59,13 +73,14 @@ yarn dev
 
 ## 📁 Project Structure
 
+```bash
 src/
 ├── app/            # App entry point
 ├── components/     # Reusable UI components (e.g., Button)
 ├── screens/        # Screen views (NovaAI,Onboarding)
 ├── utils/          # Hardcoded AI logic and types
 └── ...
-
+```
 
 ## 🧠 API
 POST /auth-service/login → Request sent to trigger user authentication and authorization with supabase auth
@@ -95,15 +110,7 @@ Write automated tests for image upload and search functionality.
 
 
 
-## 🛠 Tech Stack
 
-Next.js - React framework
-Supabase - Authentication Service
-TypeScript - Type safety
-Framer-Motion - small animation
-Tailwind CSS 4 - Utility-first styling
-Visa Product Design System - Components
-Vercel - Deployment
 
 
 
@@ -118,11 +125,12 @@ The "in-memory" database is simulated using localStorage since no backend is inv
 
 
 ## 🧑‍💻 Author
+```bash
 Emmanuel Imarhiagbe
 📧 osaroimarhiagbe@gmail.com
 🌐 emmanuelimarhiagbe.com
 💼 https://www.linkedin.com/in/emmanuel-imarhiagbe/
-
+```
 
 
 
