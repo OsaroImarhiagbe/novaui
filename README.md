@@ -55,6 +55,8 @@ yarn dev
 2. NovaAI generate a code snippet with a component suggestion
 
 
+---
+
 📁 Project Structure
 
 src/
@@ -72,19 +74,19 @@ POST /auth-service/signup → Request sent to allow user to be authenticated and
 
 POST /auth-service/logout  → Request sent to allow user to be logged out of the web app using supabase auth, user session goes null once this is complete
 
-
+---
 
 ✨ Features
 🔍 Describe UI and NovaAI generates suggested components and code snippets
+💾 Persistence Conversation history is persisted via localStorage on every change.
 
-
-💾 Persistence
-
-Conversation history is persisted via localStorage on every change.
+---
 
 🤖 How AI was utilize
 AI was utilized to help with styling the generated code logic, previous logic was not meeting the expectations that needed to be meet.
 AI was also utilized to deliever best AI response, since no AI backend was used, AI was asked to generate common response based off user input.
+
+---
 
 💭 My Approach and technical choices
 
@@ -102,7 +104,10 @@ Use WebSockets for bidirectional communication with NovaAI
 
 Write automated tests for image upload and search functionality.
 
-🎨 Tech Stack
+---
+
+
+## 🛠 Tech Stack
 
 Next.js - React framework
 Supabase - Authentication Service
@@ -112,6 +117,8 @@ Tailwind CSS 4 - Utility-first styling
 Visa Product Design System - Components
 Vercel - Deployment
 
+---
+
 🧠 Assumptions & Notes
 
 Onboarding flow was taken from an app I am currently building right now called Aspensify ( reused code to speed up development)
@@ -120,6 +127,7 @@ Chat interface was taken from an app I previously built called Foundry ( reused 
 
 The "in-memory" database is simulated using localStorage since no backend is involved.
 
+---
 
 🧑‍💻 Author
 Emmanuel Imarhiagbe
