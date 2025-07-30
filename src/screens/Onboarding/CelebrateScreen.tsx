@@ -1,6 +1,6 @@
 'use client'
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { useCallback, useState,useEffect } from "react";
 import Confetti from 'react-confetti';
 import { Typography } from "@visa/nova-react";
@@ -24,7 +24,7 @@ export default function CelebrateScreen() {
             setCelebrate(false)
             setLoading(false)
             router.push('/nova')
-        }, 3000);
+        }, 5000);
     }catch(error){
         console.error(`Error navigating to home screen: ${error}`)
     }

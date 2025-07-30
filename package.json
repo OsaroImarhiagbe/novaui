@@ -9,7 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@supabase/ssr": "^0.6.1",
+    "@supabase/supabase-js": "^2.53.0",
+    "@visa/nova-icons-react": "2.0.4",
     "@visa/nova-react": "^2.5.4",
+    "axios": "^1.11.0",
     "lucide-react": "^0.532.0",
     "motion": "^12.23.11",
     "next": "15.4.4",

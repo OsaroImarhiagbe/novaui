@@ -1,6 +1,8 @@
-import React from 'react';
+'use client'
+import React,{useCallback,useState} from 'react';
 import { Messageitem } from '@/utils/types/types';
 import { Avatar } from '@visa/nova-react';
+import ButtonComponent from './Button';
 // import user from '../../public/assets/user.png'
       // Function to determine bubble width based on message length
 const getBubbleWidth =(messageLength: number) => {
@@ -14,9 +16,13 @@ const shouldWrapText = (messageLength: number) => {
         return messageLength > 100;
     }
 const MessageItem:React.FC<Messageitem> = ({ message, date,role,NovaAi}) => {
-  
- 
+    const [copied, setCopied] = useState(false);
     
+    const copyCode = useCallback(async () => {
+        await navigator.clipboard.writeText(message);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      },[message]);
         const messageLength = message?.length || 0;
         const bubbleWidth = getBubbleWidth(messageLength);
         const shouldWrap = shouldWrapText(messageLength);
@@ -58,10 +64,9 @@ const MessageItem:React.FC<Messageitem> = ({ message, date,role,NovaAi}) => {
                         <p style={{
                             fontSize: 8,
                             alignSelf: 'flex-end',
-                            marginTop: 5,
-                            paddingLeft: 5,
-                            margin: 0
-                        }}>
+                        }}
+                        className='m-0 text-sm mt-5 pl-5 text-black'
+                        >
                             {date}
                         </p>
                     </div>
@@ -71,7 +76,7 @@ const MessageItem:React.FC<Messageitem> = ({ message, date,role,NovaAi}) => {
                         marginBottom: 5,
                         marginLeft: 8
                     }}>
-                        <Avatar alt='user' small tag="img" src='../../public/assets/user.png' />
+                        <Avatar alt='user' small tag="img" src='/images/user.png' />
                     </div>
                 </div>
             );
@@ -89,12 +94,12 @@ const MessageItem:React.FC<Messageitem> = ({ message, date,role,NovaAi}) => {
                         marginBottom: 5,
                         marginRight: 8
                     }}>
-                        <Avatar alt='user' small tag="img" src='/Users/emmanuelimarhiagbe/Documents/novaui/public/assets/user.png' />
+                        <Avatar alt='user' small tag="img" src='/images/user.png' />
                     </div>
     
                     {NovaAi ? 
-                        <p style={{ textAlign: 'center', color: '#fff' }}>
-                            NovaUI typing...
+                        <p className='text-center text-black'>
+                            NovaUI typing<span className='animate-pulse'>...</span>
                         </p> 
                         : 
                         <div style={{ 
@@ -102,6 +107,9 @@ const MessageItem:React.FC<Messageitem> = ({ message, date,role,NovaAi}) => {
                             maxWidth: '85%',
                             minWidth: '20%',
                         }}>
+                            <div className='place-self-end'>
+                            <ButtonComponent text={copied ? 'Copied' : 'Copy'} click={copyCode}/>
+                            </div>
                             <div style={{
                                 padding: messageLength > 200 ? 10 : 5,
                                 alignSelf: 'flex-start',
@@ -112,17 +120,16 @@ const MessageItem:React.FC<Messageitem> = ({ message, date,role,NovaAi}) => {
                                 hyphens: shouldWrap ? 'auto' : 'none'
                             }}>
                                <div className="rounded-lg p-4 max-h-96">
-                                <pre className="text-green-400 text-sm font-mono whitespace-pre-wrap">
+                                <pre className="text-black text-sm font-mono whitespace-pre-wrap">
                                     {message}
                                     </pre>
                                     </div>
                             </div>
                             <p style={{
                                 fontSize: 8,
-                                marginTop: 5,
-                                paddingLeft: 5,
-                                margin: 0
-                            }}>
+                            }}
+                            className='m-0 text-sm mt-5 pl-5 text-black'
+                            >
                                 {date}
                             </p>
                         </div>

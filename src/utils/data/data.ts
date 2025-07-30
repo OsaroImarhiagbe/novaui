@@ -1,5 +1,5 @@
 import {GenericSearchTiny,GenericChatTiny} from "@visa/nova-icons-react";
-import { code_templateMap,GenerateCode } from "../types/types";
+import { code_templateMap,GenerateCode,code_templateProps} from "../types/types";
 
 export const sidebar = [
     {
@@ -15,17 +15,7 @@ export const sidebar = [
     },
 
 ]
-export const suggestComponents = (prompt:string) => {
-    const lowerCase = prompt.toLowerCase()
-    const usedComponents = new Set<string>()
 
-    for(const [keyword,components] of Object.entries(componentMap)){
-        if(lowerCase.includes(keyword)){
-            components.forEach((comp) => usedComponents.add(comp))
-        }
-    }
-    return Array.from(usedComponents)
-}
 
 export const featuresData = [
   {
@@ -44,6 +34,19 @@ export const featuresData = [
      img:'/images/code2.jpg'
   },
 ]
+export const welcomeBackMessages = [
+  "Hello again",
+  "Ready to continue?",
+  "Great to have you back, ",
+  "We missed you!" ,
+  "We've been saving your spot.",
+    "Welcome back!",
+  "You’re back!",
+  "Let’s roll.",
+  "Time to build!",
+  "Let’s dive in."
+];
+
 
 export const occupationData = [
   {
@@ -78,6 +81,21 @@ export const occupationData = [
 
 export const NovaAI = (input:string) =>{
     // return ai message logic
+    let msg;
+    if(input.toLowerCase().includes('responsive') && input.toLowerCase().includes('login')){
+     msg = "NovaUI: Here's a basic component suggestion for Login Screen"
+    }else if(input.toLowerCase().includes('responsive') && input.toLowerCase().includes('signup')){
+      msg = "NovaUI: Here's a basic component suggestion for SignUp Screen"
+    }else if(input.toLowerCase().includes('Responsive') && input.toLowerCase().includes('contact')){
+      msg = "NovaUI: Here's a basic component suggestion for Contact Screen"
+    }else if(input === 'How are you?'){
+      msg = 'I am good, how are you?'
+    }else if(input === 'who made you?'){
+      msg = 'A developer that goes by the name Emmanuel Imarhiagbe made me as a take home assignment.'
+    }else{
+      msg = "I can't comprehend what you are asking"
+    }
+    return msg
 }
 
 
@@ -91,6 +109,7 @@ export const componentMap:Record<string,string[]> = {
   "username": ["Input", "Label", "InputContainer"],
   "password": ["Input", "Label", "InputContainer"],
   "remember me": ["Checkbox"],
+  "forgot password":['Link'],
   "submit": ["Button"],
   "cancel": ["Button"],
   "next": ["Button"],
@@ -100,7 +119,6 @@ export const componentMap:Record<string,string[]> = {
   "input": ["Input", "Label", "InputContainer"],
   "checkbox": ["Checkbox", "Label"],
   "radio": ["Input"], // Assuming no radio-specific component in Nova
-  "textarea": ["Input"], // Could be enhanced if Nova has one
   "select": ["Input"], // Replace if Visa has a Select component
   "label": ["Label"],
   "validation": ["Typography"],
@@ -136,12 +154,22 @@ export const componentMap:Record<string,string[]> = {
 
   // 📦 Miscellaneous
   "search": ["Input", "Button"],
-  "feedback": ["Textarea", "Button", "Typography"], // replace Textarea if applicable
+  "feedback": ["Button", "Typography"], // replace Textarea if applicable
   "upload": ["Button"],
   "profile": ["Input", "Typography", "Utility"],
 };
 
+export const suggestComponents = (prompt:string) => {
+  const lowerCase = prompt.toLowerCase()
+  const usedComponents = new Set<string>()
 
+  for(const [keyword,components] of Object.entries(componentMap)){
+      if(lowerCase.includes(keyword)){
+          components.forEach((comp) => usedComponents.add(comp))
+      }
+  }
+  return Array.from(usedComponents)
+}
 const code_template:code_templateMap = {
     Accordion:{
       name:'Accordian',
@@ -1809,29 +1837,29 @@ class VAppBarDefault extends StatelessWidget implements PreferredSizeWidget {
 
 //   const createIndent = (level, size = 2) => ' '.repeat(level * size);
 
-// const extractFormNameSimple = (sentence: string): string => {
-//     const words = sentence.toLowerCase().split(' ');
+export const extractFormNameSimple = (sentence: string): string => {
+    const words = sentence.toLowerCase().split(' ');
     
-//     // Look for form-related keywords
-//     const formKeywords = ['login', 'register', 'contact', 'signup', 'checkout', 'payment'];
+    // Look for form-related keywords
+    const formKeywords = ['login', 'register', 'contact', 'signup', 'checkout', 'payment','chat'];
     
-//     const foundKeyword = formKeywords.find(keyword => 
-//       words.some(word => word.includes(keyword))
-//     );
+    const foundKeyword = formKeywords.find(keyword => 
+      words.some(word => word.includes(keyword))
+    );
     
-//     if (foundKeyword) {
-//       // Capitalize first letter and add "Form"
-//       return foundKeyword.charAt(0).toUpperCase() + foundKeyword.slice(1) + 'Form';
-//     }
+    if (foundKeyword) {
+      // Capitalize first letter and add "Form"
+      return foundKeyword.charAt(0).toUpperCase() + foundKeyword.slice(1) + 'Screen';
+    }
     
-//     return 'Form'; // Default fallback
-//   };
+    return 'DefaultScreen'; // Default fallback
+  };
 
 const createIndent = (level:number, size:number = 2) => ' '.repeat(level * size);
 
-const interpolateTemplate = (template, props) => {
+const interpolateTemplate = (template:string, props:code_templateProps) => {
   return template.replace(/\{(\w+)\}/g, (match, key) => {
-    const value = props[key];
+    const value = props[key as keyof code_templateProps];
     if (typeof value === 'string') return value;
     if (typeof value === 'boolean') return `{${value}}`;
     if (typeof value === 'number') return `{${value}}`;
@@ -1850,7 +1878,15 @@ export const generateCode = (config:GenerateCode) => {
     const imports = validComponents.join(', ');
     
     let code = '';
-    
+
+    const new_imports = imports.split(', ')
+
+    code+=`Here is relevant Visa Product Design System Components: `
+    new_imports.forEach((item) => {
+      code+=`• ${item}`
+    })
+    code+=`\n`
+
     code += `import React from 'react';\n`;
     code += `import { ${imports} } from '@visa/nova-react';\n\n`;
     
@@ -1872,14 +1908,14 @@ export const generateCode = (config:GenerateCode) => {
     code += `${createIndent(1, indentSize)}return (\n`;
     
     const formTag = hasInput 
-      ? `<form onSubmit={handleSubmit}>`
-      : `<form>`;
+      ? `<div><form onSubmit={handleSubmit}>`
+      : `<div><form>`;
     
     code += `${createIndent(2, indentSize)}${formTag}\n`;
     
     validComponents.forEach((comp, index) => {
       const config = code_template[comp];
-      let componentCode = interpolateTemplate(config.template, config.props);
+      let componentCode = interpolateTemplate(config.template, config.props ?? {});
       
       if (hasInput && ['Input', 'Select'].includes(comp)) {
         componentCode = componentCode.replace(/\/?>$/, ` name="${comp.toLowerCase()}${index}" onChange={handleChange} />`);
@@ -1889,6 +1925,7 @@ export const generateCode = (config:GenerateCode) => {
     });
     
     code += `${createIndent(2, indentSize)}</form>\n`;
+    code += `${createIndent(2,indentSize)}</div>`
     code += `${createIndent(1, indentSize)});\n`;
     code += `}`;
     

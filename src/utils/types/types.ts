@@ -1,3 +1,5 @@
+
+
 export type Nav = {
     isOpen:boolean,
     handleClick: () => void
@@ -13,10 +15,48 @@ export type CardType = {
     description:string
     img:string
 }
+export interface AuthCardType {
+    email?:string,
+    password?:string,
+    confirmPassword?:string,
+    handleSignUp?:() => void,
+    handleLogin?:() => void,
+    loading?:boolean,
+    auth?:string,
+    isDisabled?:boolean,
+    errors?:ErrorType
+    username?:string,
+    emailValue?:string,
+    passwordValue?:string,
+    nameValue?:string,
+    confirmValue?:string,
+    emailChange?:(e:React.ChangeEvent<HTMLInputElement>) => void,
+    passwordChange?:(e:React.ChangeEvent<HTMLInputElement>) => void,
+    nameChange?:(e:React.ChangeEvent<HTMLInputElement>) => void,
+    confirmPasswordChange?:(e:React.ChangeEvent<HTMLInputElement>) => void
+}
+export type ErrorType = {
+    name:string,
+    email:string,
+    password:string,
+    confirmPassword:string
+  }
+export type NewErrorType = {
+    name:string,
+    email:string,
+    password:string,
+    confirmPassword:string
+  }
+export interface InputType extends AuthCardType {
+    label?:string,
+    place?:string,
+    value?:string,
+    change?:(e:React.ChangeEvent<HTMLInputElement>) => void;
+}
 export type CheckboxType =  {
     text?:string,
     checked?:boolean,
-    id:string,
+    id?:string,
     isDisabled?:boolean,
     onCheckedChange:(input:string,checked:boolean) => void
 }
