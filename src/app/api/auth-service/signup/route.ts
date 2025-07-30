@@ -20,7 +20,7 @@ export async function POST(request:NextRequest){
             return NextResponse.json({ error: "Inserting user into user tabled failed" }, { status: 400 });
         }
 
-        const {error:DatabaseError} = await supabase.from('Users').insert({
+        const {error:DatabaseError} = await supabase.from('users').insert({
           name:name,
           email:email,
         })

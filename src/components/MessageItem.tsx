@@ -1,6 +1,8 @@
-import React from 'react';
+'use client'
+import React,{useCallback,useState} from 'react';
 import { Messageitem } from '@/utils/types/types';
 import { Avatar } from '@visa/nova-react';
+import ButtonComponent from './Button';
 // import user from '../../public/assets/user.png'
       // Function to determine bubble width based on message length
 const getBubbleWidth =(messageLength: number) => {
@@ -14,9 +16,13 @@ const shouldWrapText = (messageLength: number) => {
         return messageLength > 100;
     }
 const MessageItem:React.FC<Messageitem> = ({ message, date,role,NovaAi}) => {
-  
- 
+    const [copied, setCopied] = useState(false);
     
+    const copyCode = useCallback(async () => {
+        await navigator.clipboard.writeText(message);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      },[message]);
         const messageLength = message?.length || 0;
         const bubbleWidth = getBubbleWidth(messageLength);
         const shouldWrap = shouldWrapText(messageLength);
@@ -101,6 +107,9 @@ const MessageItem:React.FC<Messageitem> = ({ message, date,role,NovaAi}) => {
                             maxWidth: '85%',
                             minWidth: '20%',
                         }}>
+                            <div className='place-self-end'>
+                            <ButtonComponent text={copied ? 'Copied' : 'Copy'} click={copyCode}/>
+                            </div>
                             <div style={{
                                 padding: messageLength > 200 ? 10 : 5,
                                 alignSelf: 'flex-start',

@@ -1,5 +1,5 @@
 import {GenericSearchTiny,GenericChatTiny} from "@visa/nova-icons-react";
-import { code_templateMap,GenerateCode } from "../types/types";
+import { code_templateMap,GenerateCode} from "../types/types";
 
 export const sidebar = [
     {
@@ -35,15 +35,16 @@ export const featuresData = [
   },
 ]
 export const welcomeBackMessages = [
-  "Hello again! Ready to continue?",
+  "Hello again",
+  "Ready to continue?",
   "Great to have you back, ",
   "We missed you!" ,
   "We've been saving your spot.",
-  "Let’s make today count. Welcome back!",
-  "You’re back! Let’s roll.",
-  "Time to build something amazing again.",
-  "Everything’s synced and ready. Welcome back!",
-  "Your projects are waiting. Let’s dive in."
+    "Welcome back!",
+  "You’re back!",
+  "Let’s roll.",
+  "Time to build!",
+  "Let’s dive in."
 ];
 
 
@@ -1856,7 +1857,7 @@ export const extractFormNameSimple = (sentence: string): string => {
 
 const createIndent = (level:number, size:number = 2) => ' '.repeat(level * size);
 
-const interpolateTemplate = (template, props) => {
+const interpolateTemplate = (template:string, props) => {
   return template.replace(/\{(\w+)\}/g, (match, key) => {
     const value = props[key];
     if (typeof value === 'string') return value;

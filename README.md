@@ -47,7 +47,7 @@
 - 🎨 **Live Component Preview** – Visually render the generated components alongside the code.
 - 📋 **One-click Copy** – Add a “Copy to clipboard” button with feedback toast.
 - ⭐ **Save Favorite Components** – Allow users to bookmark and revisit commonly used UI snippets.
-- 🌓 **Theme Toggle** – Add light/dark mode toggling using Tailwind/NovaUI theming.
+- 🌓 **Theme Toggle** – Add light/dark mode toggling using Nova theming.
 - 🧠 **Backend-Powered AI Integration** – Replace mock logic with a real AI (e.g., OpenAI API) for smarter and more flexible code generation.
 
 
@@ -147,11 +147,11 @@ AI tools were leveraged during development to support ideation and improve code 
 
 To provide a familiar and user friendly experience, NovaAI is designed to function similarly to conversational AI tools like Claude and ChatGPT, allowing users to describe the UI they want in a free-form input box.
 For the code generation logic, I opted to hardcode the logic where user input is mapped to pre-defined components and code snippets. This approach allows the system to suggest relevant components based on the input, even though the AI logic is currently simulated (mocked), rather than powered by a real AI backend.
-Furthermore AI response logic is hardcoded as well due that, the mock AI has a restrictive feel to user response.
+Furthermore AI response logic is hardcoded as well, making the mock AI have a restrictive feel to user response.
 
 
 ## 💡 What I’d add or Improve with more time:
-- Efficient Image Delivery & Storage: Set up a CDN (e.g., Firebase or Supabase Storage) for faster, more efficient image hosting and delivery (allowing users to upload images of components).
+- Efficient Image Delivery & Storage: Set up a CDN (e.g., Firebase or Supabase Storage if developing by myself) for faster, more efficient image hosting and delivery (allowing users to upload images of components).
 
 - Database Integration: Implement a NoSQL database service (e.g., MongoDB or AWS DynamoDB) to persist chat history and user data for better scalability.
 

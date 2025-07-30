@@ -29,7 +29,9 @@ const AuthCard:React.FC<AuthCardType>= ({
   confirmValue,
   confirmPasswordChange,
   nameValue,
-  nameChange
+  nameChange,
+  errors,
+  isDisabled
 }) => {
   return (
     <ContentCard
@@ -55,14 +57,23 @@ const AuthCard:React.FC<AuthCardType>= ({
          <InputComponent label={username} place='Name...' value={nameValue} change={nameChange}/>
         </>
       }
+      {errors?.name && (<Typography className="v-pt-4 text-red-500">
+          {errors.name}
+        </Typography>)}
         <ContentCardTitle
         variant="headline-4"
         className='text-black'>{email}</ContentCardTitle>
         <InputComponent label={email} place='Email...' value={emailValue} change={emailChange}/>
+        { errors?.email &&   (<Typography className="v-pt-4 text-red-500">
+          {errors.email}
+        </Typography>)}
         <Typography className="v-pt-4">
           {password}
         </Typography>
         <InputComponent label={password} place='Password...' value={passwordValue} change={passwordChange}/>
+        {errors?.password && ( <Typography className="v-pt-4 text-red-500">
+          {password}
+        </Typography>)}
         {
           auth === 'signup' &&  <Typography className="v-pt-4">
           {confirmPassword}
@@ -71,12 +82,15 @@ const AuthCard:React.FC<AuthCardType>= ({
         {
           auth === 'signup' && <InputComponent label={confirmPassword} place='Confirm Password...' value={confirmValue} change={confirmPasswordChange}/>
         }
+        {errors?.confirmPassword && ( <Typography className="v-pt-4 text-red-500">
+          {errors.confirmPassword}
+        </Typography>)}
           {/* Remember Me */}
           {
             auth === 'login' && 
             <Utility vFlex vFlexRow vAlignItems="center" vJustifyContent="between">
             <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
-              <CheckboxComponent/>
+              <CheckboxComponent onCheckedChange={() => {}}/>
               <Typography style={{ color: '#6b7280', fontSize: '14px' }}>
                 Remember me
               </Typography>
@@ -97,7 +111,7 @@ const AuthCard:React.FC<AuthCardType>= ({
           <>
             <Utility vFlex vFlexRow vAlignItems='center' vJustifyContent='center' vGap={10}>
                  <ButtonComponent text='Login' click={handleLogin}/>
-                 <ButtonComponent text='SignUp' click={handleSignUp}/>
+                 <ButtonComponent text='SignUp' click={handleSignUp} isDisabled={isDisabled}/>
            </Utility>
 
              <Utility vFlex vFlexRow vAlignItems="center" vGap={16}>

@@ -47,8 +47,7 @@ const LoginScreen = () => {
         }finally{
             setLoading(false)
         }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      },[])
+      },[formData.email, formData.password, router])
     return (
        <section className="relative min-h-screen w-full overflow-x-hidden flex-1">
         <div

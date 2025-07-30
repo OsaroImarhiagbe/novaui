@@ -3,6 +3,7 @@ import { Typography} from "@visa/nova-react";
 import { motion } from "motion/react"
 import { useCallback,useState } from "react";
 import { useRouter } from "next/navigation";
+import { ErrorType,NewErrorType } from "@/utils/types/types";
 import AuthCard from '@/components/AuthCard'
 import axios from 'axios'
 
@@ -15,38 +16,86 @@ const SignUpScreen = () => {
         password:'',
         confirmPassword:''
     })
+    const [errors, setErrors] = useState<ErrorType>({
+      name: '',
+      email: '',
+      password: '',
+      confirmPassword: ''
+    });
 
+    const isFormValid = formData.name && formData.email && formData.password && formData.confirmPassword 
+    const validate = useCallback(() => {
+      const newErrors: NewErrorType = {
+        name: '',
+        email: '',
+        password: '',
+        confirmPassword: ''
+      };
+      
+      if (!formData.name.trim()) {
+        newErrors.name = 'Name is required';
+      }
+      
+      if (!formData.email.trim()) {
+        newErrors.email = 'Email is required';
+      } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+        newErrors.email = 'Email is invalid';
+      }
+      
+      if (!formData.password) {
+        newErrors.password = 'Password is required';
+      } else if (formData.password.length < 8) {
+        newErrors.password = 'Password must be at least 8 characters';
+      }
+      
+      if (formData.password !== formData.confirmPassword) {
+        newErrors.confirmPassword = 'Passwords do not match';
+      }
+      
+      return newErrors;
+    },[formData.confirmPassword, formData.email, formData.name, formData.password]);
     const handleSignUp = useCallback(async () => { //function to handle user signup
       setLoading(true)
       try{
-        const response = await axios.post('api/auth-service/signup',{
+        const validationErrors = validate();
+        // console.log('Errors: ',validationErrors)
+      // Form is valid - would typically submit to server here
+        const hasErrors = Object.values(validationErrors).some(error => error !== '')
+        if(hasErrors){
+          setErrors(validationErrors)
+          return;
+        }
+        const response = await axios.post('/api/auth-service/signup',{
             name:formData.name,
             email:formData.email,
             password:formData.password
         })
-        if(!response || response.status === 500){
+          if(!response || response.status === 500){
             throw new Error('Error with signup')
-        }
-        if(response && response.status === 200){
+          }
+          if(response && response.status === 200){
             setTimeout(() => {
                 setLoading(false)
                 router.push('/welcome')
               },1000)
-        }
+          }
         setFormData({
             name:'',
             email:'',
             password:'',
             confirmPassword:''
         })
+        setErrors({
+          name: '',
+          email: '',
+          password: '',
+          confirmPassword: ''
+        });
       }catch(error){
         console.error(`Error with navigation: ${error}`)
         setLoading(false)
-      }finally{
-        setLoading(false)
       }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[])
+    },[formData.email, formData.name, formData.password, router, validate])
 
     const handleEmailChange = useCallback((e:React.ChangeEvent<HTMLInputElement>) => { // Event handler for signup
         setFormData((prev) => ({...prev,email:e.target.value}))
@@ -114,6 +163,8 @@ const SignUpScreen = () => {
           emailValue={formData.email}
           passwordValue={formData.password}
           nameValue={formData.name}
+          errors={errors}
+          isDisabled={!isFormValid}
           confirmValue={formData.confirmPassword}
           />
    </div>

@@ -22,6 +22,9 @@ import {
     UtilityFragment,
 } from '@visa/nova-react';
 import Styles from './styles.module.scss';
+import ButtonComponent from "@/components/Button";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const NovaScreen = () => {
     const [value, setValue] = useState<string>('')
@@ -32,6 +35,7 @@ const NovaScreen = () => {
     const [welcomeBack,setWelcomeBack] = useState<string>('Welcome back')
     const [navExpanded, setNavExpanded] = useState<boolean>(false);
     const [chatHistory,setChatHistory] = useState<Record<string,ConversationType[]>>({})
+    const router = useRouter()
 
     const id = 'nova-sidebar-navigation';
     const navRegionAriaLabel = 'Nova UI Sidebar Navigation';
@@ -124,12 +128,20 @@ const NovaScreen = () => {
         }
     }
 
+    const handleLogOut = useCallback(async () => {
+        const response = await axios.post('/api/auth-service/logout')
+        if(response && response.status === 200){
+            router.push('/auth/login')
+        }
+    },[router])
    
     const startNewChat = useCallback(() => {
         setConversation([]);
         setValue('');
     },[])
-console.log('Chat Histry:',chatHistory)
+
+  
+// console.log('Chat Histry:',chatHistory)
     return (
          <div className="relative min-h-screen w-full overflow-hidden">
         <div
@@ -191,7 +203,7 @@ console.log('Chat Histry:',chatHistory)
                                         <GenericChatTiny className="mr-3"/>
                                             <span className="text-black">Chat History</span>
                                         </div>
-                                        <TabSuffix element={chatHistoryExpanded ? <VisaChevronUpTiny color="#fff" /> : <VisaChevronDownTiny color="#fff"/>} />
+                                        <TabSuffix element={chatHistoryExpanded ? <VisaChevronUpTiny color="#000" /> : <VisaChevronDownTiny color="#000"/>} />
                                          </Button>
                                 <UtilityFragment vHide={!chatHistoryExpanded}>
                                     <Tabs orientation="vertical" id={`${id}-l1-label2-sub-menu`} aria-hidden={!chatHistoryExpanded}>
@@ -222,8 +234,13 @@ console.log('Chat Histry:',chatHistory)
                                             <VisaSettingsTiny className="mr-3" color="#000" />
                                             <span className="text-black">Settings</span>
                                         </div>
-                                        <TabSuffix element={settingsExpanded ? <VisaChevronUpTiny /> : <VisaChevronDownTiny />} />
+                                        <TabSuffix element={settingsExpanded ? <VisaChevronUpTiny color="#000"/> : <VisaChevronDownTiny color="#000"/>} />
                                     </Button>
+                                </UtilityFragment>
+                                <UtilityFragment vHide={!settingsExpanded}>
+                                    <Tabs orientation="vertical" id={`${id}-l1-label2-sub-menu`} aria-hidden={!settingsExpanded}>
+                                        <ButtonComponent text="Logout" click={handleLogOut}/>
+                                    </Tabs>
                                 </UtilityFragment>
                             </nav>
                         </div>)}   
@@ -279,7 +296,7 @@ console.log('Chat Histry:',chatHistory)
                                     fontSize: 35,
                                     marginBottom: 30
                                 }}>
-                                   {`${welcomeBack} Emmanuel`} ✨
+                                   {`${welcomeBack} Emmanuel`} ✨ 
                                 </Typography>
                                 <Typography className="text-lg text-black" variant="subtitle-2">
                                     Describe the UI you want to build and NovaUI will suggest the components and code for you.

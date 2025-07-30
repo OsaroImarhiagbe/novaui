@@ -23,6 +23,8 @@ export interface AuthCardType {
     handleLogin?:() => void,
     loading?:boolean,
     auth?:string,
+    isDisabled?:boolean,
+    errors?:ErrorType
     username?:string,
     emailValue?:string,
     passwordValue?:string,
@@ -33,7 +35,18 @@ export interface AuthCardType {
     nameChange?:(e:React.ChangeEvent<HTMLInputElement>) => void,
     confirmPasswordChange?:(e:React.ChangeEvent<HTMLInputElement>) => void
 }
-
+export type ErrorType = {
+    name:string,
+    email:string,
+    password:string,
+    confirmPassword:string
+  }
+export type NewErrorType = {
+    name:string,
+    email:string,
+    password:string,
+    confirmPassword:string
+  }
 export interface InputType extends AuthCardType {
     label?:string,
     place?:string,
