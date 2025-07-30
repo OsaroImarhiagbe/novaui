@@ -1,5 +1,5 @@
 import {GenericSearchTiny,GenericChatTiny} from "@visa/nova-icons-react";
-import { code_templateMap,GenerateCode} from "../types/types";
+import { code_templateMap,GenerateCode,code_templateProps} from "../types/types";
 
 export const sidebar = [
     {
@@ -1857,9 +1857,9 @@ export const extractFormNameSimple = (sentence: string): string => {
 
 const createIndent = (level:number, size:number = 2) => ' '.repeat(level * size);
 
-const interpolateTemplate = (template:string, props) => {
+const interpolateTemplate = (template:string, props:code_templateProps) => {
   return template.replace(/\{(\w+)\}/g, (match, key) => {
-    const value = props[key];
+    const value = props[key as keyof code_templateProps];
     if (typeof value === 'string') return value;
     if (typeof value === 'boolean') return `{${value}}`;
     if (typeof value === 'number') return `{${value}}`;
@@ -1915,7 +1915,7 @@ export const generateCode = (config:GenerateCode) => {
     
     validComponents.forEach((comp, index) => {
       const config = code_template[comp];
-      let componentCode = interpolateTemplate(config.template, config.props);
+      let componentCode = interpolateTemplate(config.template, config.props ?? {});
       
       if (hasInput && ['Input', 'Select'].includes(comp)) {
         componentCode = componentCode.replace(/\/?>$/, ` name="${comp.toLowerCase()}${index}" onChange={handleChange} />`);
