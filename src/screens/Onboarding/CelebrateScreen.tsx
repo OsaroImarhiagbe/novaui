@@ -1,6 +1,6 @@
 'use client'
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { useCallback, useState,useEffect } from "react";
 import Confetti from 'react-confetti';
 import { Typography } from "@visa/nova-react";
