@@ -48,6 +48,16 @@ const LoginScreen = () => {
             setLoading(false)
         }
       },[formData.email, formData.password, router])
+
+      const handleAnonymousLogin = useCallback(async () => {
+        const response = await axios.post('/api/auth-service/anonymous-login')
+        if(response && response.status === 200){
+            setTimeout(() => {
+                setLoading(false)
+                router.push('/welcome')
+              },1000)
+        }
+      },[router])
     return (
        <section className="relative min-h-screen w-full overflow-x-hidden flex-1">
         <div
@@ -89,6 +99,7 @@ const LoginScreen = () => {
           username='Name'
           handleSignUp={handleSignUp}
           handleLogin={handleLogin}
+          handleAnon={handleAnonymousLogin}
           loading={loading}
           emailChange={handleEmailChange}
           passwordChange={handlePasswordChange}

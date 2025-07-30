@@ -21,6 +21,7 @@ export interface AuthCardType {
     confirmPassword?:string,
     handleSignUp?:() => void,
     handleLogin?:() => void,
+    handleAnon?:() => void
     loading?:boolean,
     auth?:string,
     isDisabled?:boolean,

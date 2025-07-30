@@ -86,7 +86,7 @@ export const NovaAI = (input:string) =>{
      msg = "NovaUI: Here's a basic component suggestion for Login Screen"
     }else if(input.toLowerCase().includes('responsive') && input.toLowerCase().includes('signup')){
       msg = "NovaUI: Here's a basic component suggestion for SignUp Screen"
-    }else if(input.toLowerCase().includes('Responsive') && input.toLowerCase().includes('contact')){
+    }else if(input.toLowerCase().includes('responsive') && input.toLowerCase().includes('contact')){
       msg = "NovaUI: Here's a basic component suggestion for Contact Screen"
     }else if(input === 'How are you?'){
       msg = 'I am good, how are you?'

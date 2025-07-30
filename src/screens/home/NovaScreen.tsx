@@ -296,7 +296,7 @@ const NovaScreen = () => {
                                     fontSize: 35,
                                     marginBottom: 30
                                 }}>
-                                   {`${welcomeBack} Emmanuel`} ✨ 
+                                   {welcomeBack} ✨ 
                                 </Typography>
                                 <Typography className="text-lg text-black" variant="subtitle-2">
                                     Describe the UI you want to build and NovaUI will suggest the components and code for you.
