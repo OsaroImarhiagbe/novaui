@@ -18,6 +18,7 @@ const AuthCard:React.FC<AuthCardType>= ({
   password,
   handleSignUp,
   handleLogin,
+  handleAnon,
   loading,
   confirmPassword,
   auth,
@@ -110,7 +111,8 @@ const AuthCard:React.FC<AuthCardType>= ({
           {loading ? <Loader2 className='animate-spin text-black'/> : 
           <>
             <Utility vFlex vFlexRow vAlignItems='center' vJustifyContent='center' vGap={10}>
-                 <ButtonComponent text='Login' click={handleLogin}/>
+                 {/* <ButtonComponent text='Login' click={handleLogin}/> */}
+                 <ButtonComponent text='Explore First' click={handleAnon}/>
                  <ButtonComponent text='SignUp' click={handleSignUp} isDisabled={isDisabled}/>
            </Utility>
 
